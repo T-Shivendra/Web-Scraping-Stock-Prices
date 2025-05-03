@@ -1,39 +1,29 @@
-# 📈 Web Scraping Stock Prices using Python
+# 📈 Stock Data Scraper (Groww.in)
 
-This project scrapes **real-time stock data** from [Groww.in](https://groww.in) using Python. It automates the extraction of key stock information such as **Company Name**, **Current Price**, **Change (%)**, **Volume**, and **Stock URL**.
-
----
-
-## 🚀 Features
-
-- ✅ Scrapes stock data from multiple company pages (US + Indian Stocks)
-- ✅ Extracts:
-  - Company Name
-  - Current Stock Price
-  - Price Change (%)
-  - Volume
-  - Stock URL
-- ✅ Displays clean, structured output
-- ✅ Handles missing or unavailable data gracefully
-- ✅ Easy to extend to new stock URLs
+This Python script scrapes financial data of US and Indian companies from [Groww.in](https://groww.in) using `requests` and `BeautifulSoup`. The data is structured into a Pandas DataFrame and saved as a CSV file.
 
 ---
 
-## 🧠 Tech Stack Used
+## 🔧 Features
 
-- **Python**
-- **Requests** – for HTTP requests
-- **BeautifulSoup (bs4)** – for parsing HTML
-- **Pandas** (used optionally for future data processing)
-- **Groww.in** as the source website
+- Scrapes:
+  - Company name
+  - Current stock price
+  - Daily change %
+  - Market Cap
+  - P/E Ratio
+  - EPS
+  - Dividend Yield
+  - ROE, P/B, Face Value, Volume, and more
+
+- Supports both US and Indian stocks listed on Groww.in
+- Outputs data as a table and also saves it as `stock_data.csv`
 
 ---
 
-## 🔍 Sample Output
+## 🧰 Requirements
+
+Install required Python packages:
 
 ```bash
-{'Company': 'Nike Inc', 'Price': '$58.59', 'Change': 'N/A', 'Volume': 'N/A', 'URL': 'https://groww.in/us-stocks/nke'}
---------------------------------------------------
-{'Company': 'Apple Inc', 'Price': '$205.35', 'Change': 'N/A', 'Volume': 'N/A', 'URL': 'https://groww.in/us-stocks/aapl'}
---------------------------------------------------
-...
+pip install requests beautifulsoup4 pandas
