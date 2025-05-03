@@ -55,11 +55,39 @@ def get_stock_data(url):
             volume_table = soup.find('table', {'class': 'tb10Table col 15'})
             volume = volume_table.find_all('td')[1].text.strip() if volume_table else "N/A"
 
-            return{
+            # Initialize metrics
+            metrics = {
+                'Market Cap': 'N/A',
+                'P/E Ratio': 'N/A',
+                'Dividend Yield': 'N/A',
+                '52W High': 'N/A',
+                '52W Low': 'N/A',
+                'EPS': 'N/A',
+                'ROE': 'N/A',
+                'P/B Ratio': 'N/A',
+                'Debt to Equity': 'N/A',
+                'Face Value': 'N/A',
+                'Volume' : 'N/A',
+            }
+
+            # Parse tables for financial metrics
+            tables = soup.find_all('table')
+            for table in tables:
+                rows = table.find_all('tr')
+                for row in rows:
+                    cols = row.find_all('td')
+                    if len(cols) >= 2:
+                        label = cols[0].text.strip()
+                        value = cols[1].text.strip()
+                        for key in metrics.keys():
+                            if key.lower() in label.lower():
+                                metrics[key] = value
+
+        return{
             'Company': company,
             'Price': price,
             'Change': change,
-            'Volume': volume,
+            **metrics,
             'URL': url
             }
 
@@ -67,10 +95,22 @@ def get_stock_data(url):
             print(f"Error scrapping {url}: {e}")
             return None
 
+all_data = []
 # Loop through URLs
 for url in urls:
-    data = get_stock_data(url)
-    if data:
-        print(data)
-        print('-' * 50)
+    print(f"Scraping: {url}")
+    stock_data = get_stock_data(url)
+    if stock_data:
+     all_data.append(stock_data)
+    time.sleep(2)  # polite delay
 
+# Create and display the DataFrame
+df = pd.DataFrame(all_data)
+
+print("\nScraped Stock Data:\n")
+print(df.to_string(index=False))
+# Create and display the DataFrame
+df = pd.DataFrame(all_data)
+
+print("\nScraped Stock Data:\n")
+print(df.to_string(index=False))
